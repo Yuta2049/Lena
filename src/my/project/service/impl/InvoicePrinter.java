@@ -1,7 +1,7 @@
-package my.project.impl;
+package my.project.service.impl;
 
-import my.project.DocumentPrinter;
-import my.project.Invoice;
+import my.project.service.DocumentPrinter;
+import my.project.model.Invoice;
 
 public class InvoicePrinter implements DocumentPrinter {
 

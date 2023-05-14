@@ -1,4 +1,6 @@
-package my.project;
+package my.project.model;
+
+import my.project.service.CustomerInformer;
 
 import java.util.Objects;
 import java.util.UUID;
@@ -7,11 +9,13 @@ public class Customer {
     private UUID customerId;
     private String customerName;
     private String customerEmail;
+    private CustomerInformer customerInformer;
 
-    public Customer(UUID customerId, String customerName, String customerEmail) {
+    public Customer(UUID customerId, String customerName, String customerEmail, CustomerInformer customerInformer) {
         this.customerId = customerId;
         this.customerName = customerName;
         this.customerEmail = customerEmail;
+        this.customerInformer = customerInformer;
     }
 
     public UUID getCustomerId() {
@@ -36,6 +40,10 @@ public class Customer {
 
     public void setCustomerEmail(String customerEmail) {
         this.customerEmail = customerEmail;
+    }
+
+    public void sendEmailToCustomer(String message) {
+        customerInformer.sendEmailToCustomer(this, message);
     }
 
     @Override
