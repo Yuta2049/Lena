@@ -3,46 +3,21 @@ package my.project.model;
 import my.project.service.CustomerInformer;
 
 import java.util.Objects;
-import java.util.UUID;
 
 public class Customer {
-    private UUID customerId;
-    private String customerName;
-    private String customerEmail;
-    private CustomerInformer customerInformer;
+    private final int id;
+    private final String name;
+    private final String email;
+    private final CustomerInformer customerInformer;
 
-    public Customer(UUID customerId, String customerName, String customerEmail, CustomerInformer customerInformer) {
-        this.customerId = customerId;
-        this.customerName = customerName;
-        this.customerEmail = customerEmail;
+    public Customer(int id, String name, String email, CustomerInformer customerInformer) {
+        this.id = id;
+        this.name = name;
+        this.email = email;
         this.customerInformer = customerInformer;
     }
 
-    public UUID getCustomerId() {
-        return customerId;
-    }
-
-    public void setCustomerId(UUID customerId) {
-        this.customerId = customerId;
-    }
-
-    public String getCustomerName() {
-        return customerName;
-    }
-
-    public void setCustomerName(String customerName) {
-        this.customerName = customerName;
-    }
-
-    public String getCustomerEmail() {
-        return customerEmail;
-    }
-
-    public void setCustomerEmail(String customerEmail) {
-        this.customerEmail = customerEmail;
-    }
-
-    public void sendEmailToCustomer(String message) {
+    public void informCustomer(String message) {
         customerInformer.sendEmailToCustomer(this, message);
     }
 
@@ -50,12 +25,23 @@ public class Customer {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
+
         Customer customer = (Customer) o;
-        return Objects.equals(customerId, customer.customerId) && Objects.equals(customerName, customer.customerName) && Objects.equals(customerEmail, customer.customerEmail);
+
+        if (id != customer.id) return false;
+        if (!Objects.equals(name, customer.name))
+            return false;
+        if (!Objects.equals(email, customer.email))
+            return false;
+        return Objects.equals(customerInformer, customer.customerInformer);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(customerId, customerName, customerEmail);
+        int result = id;
+        result = 31 * result + (name != null ? name.hashCode() : 0);
+        result = 31 * result + (email != null ? email.hashCode() : 0);
+        result = 31 * result + (customerInformer != null ? customerInformer.hashCode() : 0);
+        return result;
     }
 }

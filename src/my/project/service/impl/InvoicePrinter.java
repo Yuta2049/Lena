@@ -7,6 +7,6 @@ public class InvoicePrinter implements DocumentPrinter {
 
     @Override
     public void printInvoice(Invoice invoice) {
-        // Реализация печати инвойса
+        System.out.println("Invoice printed");
     }
 }

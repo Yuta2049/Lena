@@ -7,32 +7,14 @@ import java.util.Objects;
 
 public class Invoice {
 
-    private BigDecimal amount;
-
-    private Customer customer;
-
-    private DocumentPrinter documentPrinter;
+    private final DocumentPrinter documentPrinter;
+    private final BigDecimal amount;
+    private final Customer customer;
 
     public Invoice(BigDecimal amount, Customer customer, DocumentPrinter documentPrinter) {
         this.amount = amount;
         this.customer = customer;
         this.documentPrinter = documentPrinter;
-    }
-
-    public BigDecimal getAmount() {
-        return amount;
-    }
-
-    public void setAmount(BigDecimal amount) {
-        this.amount = amount;
-    }
-
-    public Customer getCustomer() {
-        return customer;
-    }
-
-    public void setCustomer(Customer customer) {
-        this.customer = customer;
     }
 
     public void printInvoice() {
@@ -43,12 +25,19 @@ public class Invoice {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
+
         Invoice invoice = (Invoice) o;
-        return Objects.equals(amount, invoice.amount) && Objects.equals(customer, invoice.customer);
+
+        if (!Objects.equals(amount, invoice.amount)) return false;
+        if (!Objects.equals(customer, invoice.customer)) return false;
+        return Objects.equals(documentPrinter, invoice.documentPrinter);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(amount, customer);
+        int result = amount != null ? amount.hashCode() : 0;
+        result = 31 * result + (customer != null ? customer.hashCode() : 0);
+        result = 31 * result + (documentPrinter != null ? documentPrinter.hashCode() : 0);
+        return result;
     }
 }
